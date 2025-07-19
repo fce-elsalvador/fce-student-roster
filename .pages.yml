@@ -1,0 +1,55 @@
+# .pages.yml
+media:
+  input: public/public/uploads/media # Where PagesCMS saves uploaded files in the repo
+  output: /public/uploads/media      # How the SSG should reference these files
+
+content:
+  - name: student_profiles
+    label: Student Profiles
+    path: src/content/students # Directory where student profile Markdown files will be stored
+    type: collection
+
+    filename: '{year}-{month}-{day}-{primary}.md'
+    view:
+      fields: [studentName, status, graduationYearExpected, schoolName]
+
+      primary: studentName
+  
+      sort: [studentName]
+    
+    # It defines all the input fields for the editor.
+    fields:
+      # --- Core Student Information ---
+      - { name: studentName, label: Full Name, type: string, required: true }
+
+      - name: profileImage
+        label: Profile Picture
+        type: image
+        options:
+          path: 'student_photos'
+      - { name: birthday, label: Birthday, type: string }
+
+      # --- Academic Details ---
+      - name: status
+        label: Academic Status
+        type: select
+        options:
+          values:
+            - "Active Student"
+            - "Graduated"
+            - "Thesis/Internship"
+            - "Exam Pending"
+        required: true
+      - { name: schoolName, label: School / University Name, type: string }
+      - { name: majorOrFieldOfStudy, label: Major or Field of Study, type: string }
+      - { name: currentGradeLevel, label: Current Grade Level or Year, type: string }
+      - { name: graduationYearExpected, label: Expected Graduation Year, type: string }
+
+      # --- Program & Personal Information ---
+      - { name: sponsors, label: Sponsors, type: text, description: "List each sponsor, separated by commas." }
+      - { name: communityProject, label: Community Project, type: string }
+
+      # --- Student's Story (from Q&A cards) ---
+      - { name: impactStatement, label: Impact of Scholarship, type: rich-text, description: "Answer to 'What impact has the scholarship program had on your life?'" }
+      - { name: aspirations, label: Future Aspirations, type: rich-text, description: "Answer to 'What do you want to do after finishing your degree?'" }
+      - { name: obstacles, label: Obstacles Encountered, type: rich-text, description: "Answer to 'What have been your biggest obstacles?'" }
